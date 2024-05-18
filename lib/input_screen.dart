@@ -45,6 +45,7 @@ class _InputScreen extends State<InputScreen>
           Padding(
             padding: const EdgeInsets.only(right: 25),
             child: IconButton(onPressed: (){
+              dispose();
             },
                 icon: const Icon(Icons.refresh_sharp, color: Colors.black,size: 30)
             ),
