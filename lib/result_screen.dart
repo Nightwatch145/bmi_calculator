@@ -1,21 +1,20 @@
 import 'package:bmi_calculator/bmi_range_advice.dart';
 import 'package:bmi_calculator/bmi_range_color.dart';
 import 'package:bmi_calculator/bmi_range_result.dart';
-import 'package:bmi_calculator/container_of_health_condition.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class bmi_result extends StatefulWidget
+class BmiResult extends StatefulWidget
 {
    final double ans;
 
-  const bmi_result({super.key, required this.ans});
+  const BmiResult({super.key, required this.ans});
 
   @override
-  State<bmi_result> createState() => _bmi_resultState();
+  State<BmiResult> createState() => _BmiResultState();
 }
 
-class _bmi_resultState extends State<bmi_result> {
+class _BmiResultState extends State<BmiResult> {
   @override
   Widget build(BuildContext context) {
    return Scaffold(
@@ -35,47 +34,7 @@ class _bmi_resultState extends State<bmi_result> {
               child: SizedBox(
                 height: 290,
                 width:270,
-                child: SfRadialGauge(
-                axes: <RadialAxis>[
-                RadialAxis(minimum: 10, maximum: 45, ranges: <GaugeRange>[
-                  GaugeRange(
-                      startValue: 10,
-                      endValue: 18.4,
-                      color: Colors.blue,
-                      startWidth: 5,
-                      ),
-                GaugeRange(
-                startValue: 18.5,
-                endValue: 24.9,
-                color: Colors.green,
-                ),
-                  GaugeRange(
-                      startValue: 25,
-                      endValue: 29.9,
-                      color: Colors.yellow,
-                     ),
-                GaugeRange(
-                startValue: 30,
-                endValue: 39.9,
-                color: Colors.orange,
-                ),
-                GaugeRange(
-                startValue: 40,
-                endValue: 45,
-                color: Colors.red,
-                endWidth: 5)
-                ], pointers: <GaugePointer>[
-                NeedlePointer(value: widget.ans)
-                ], annotations: <GaugeAnnotation>[
-                GaugeAnnotation(
-                widget: Container(
-                child: Text(widget.ans.toStringAsFixed(1).toString(),
-                style: const TextStyle(
-                fontSize: 25, fontWeight: FontWeight.bold))),
-                angle: 90,
-                positionFactor: 0.6)
-                ])
-                ]),
+                child: buildSfRadialGauge(),
               ),
             ),
             Container(
@@ -88,7 +47,7 @@ class _bmi_resultState extends State<bmi_result> {
               child: Center(
                 child: Text(bmi_range_result.getBmiText(widget.ans),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 1.5,
@@ -252,7 +211,7 @@ class _bmi_resultState extends State<bmi_result> {
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
                         letterSpacing: 1.5,
-                        color: (widget.ans >= 25.00) && (widget.ans <=29.9)? Colors.yellow.shade600 : Colors.black
+                        color: (widget.ans >= 25.00) && (widget.ans <=29.9)? Colors.yellow.shade700 : Colors.black
                     ),
                   ),
 
@@ -338,5 +297,47 @@ class _bmi_resultState extends State<bmi_result> {
       ),
     ),
    );
+  }
+  SfRadialGauge buildSfRadialGauge() {
+    return SfRadialGauge(
+              axes: <RadialAxis>[
+              RadialAxis(minimum: 10, maximum: 45, ranges: <GaugeRange>[
+                GaugeRange(
+                    startValue: 10,
+                    endValue: 18.4,
+                    color: Colors.blue,
+                    startWidth: 5,
+                    ),
+              GaugeRange(
+              startValue: 18.5,
+              endValue: 24.9,
+              color: Colors.green,
+              ),
+                GaugeRange(
+                    startValue: 25,
+                    endValue: 29.9,
+                    color: Colors.yellow.shade600,
+                   ),
+              GaugeRange(
+              startValue: 30,
+              endValue: 39.9,
+              color: Colors.orange,
+              ),
+              GaugeRange(
+              startValue: 40,
+              endValue: 45,
+              color: Colors.red,
+              endWidth: 5)
+              ], pointers: <GaugePointer>[
+              NeedlePointer(value: widget.ans)
+              ], annotations: <GaugeAnnotation>[
+              GaugeAnnotation(
+              widget: Text(widget.ans.toStringAsFixed(1).toString(),
+              style: const TextStyle(
+              fontSize: 25, fontWeight: FontWeight.bold)),
+              angle: 90,
+              positionFactor: 0.6)
+              ])
+              ]);
   }
 }

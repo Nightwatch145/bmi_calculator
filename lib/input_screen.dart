@@ -177,7 +177,7 @@ class _InputScreen extends State<InputScreen>
                 ans = weight/ (meter * meter);
                 setState(() {
                 });
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>bmi_result(ans : ans),),);
+               Navigator.push(context, MaterialPageRoute(builder: (context)=>BmiResult(ans : ans),),);
              },
                  child: const Text('Calculate your BMI->',
                  textAlign: TextAlign.center,
