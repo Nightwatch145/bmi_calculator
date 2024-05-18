@@ -18,8 +18,8 @@ class BMIIntro extends StatelessWidget{
                  height: MediaQuery.of(context).size.height * 0.45,
                  decoration: const BoxDecoration(
                    image: DecorationImage(
-                       image:AssetImage('images/bmi front page.jpg'),
-                     fit: BoxFit.fill
+                       image:AssetImage('images/bmi intro page.jpg'),
+                     fit: BoxFit.contain
                    )
                  ),
                ),

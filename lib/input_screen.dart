@@ -1,5 +1,6 @@
+import 'package:bmi_calculator/gender_container.dart';
+import 'package:bmi_calculator/result_screen.dart';
 import 'package:flutter/material.dart';
-
 enum Gender
 {
   male, female, neutral
@@ -17,7 +18,20 @@ class _InputScreen extends State<InputScreen>
   Color activeColorForMale = Colors.lightBlue.shade100;
   Color activeColorForFemale = Colors.pink.shade100;
  Gender selectedGender = Gender.neutral;
-
+ final TextEditingController ageTEcontroller = TextEditingController();
+ final TextEditingController weightTEcontroller = TextEditingController();
+ final TextEditingController heightFtTEcontroller = TextEditingController();
+ final TextEditingController heightInTEcontroller = TextEditingController();
+ double ans = 0;
+ @override
+ void dispose()
+ {
+   ageTEcontroller.dispose();
+   weightTEcontroller.dispose();
+   heightFtTEcontroller.dispose();
+   heightInTEcontroller.dispose();
+   super.dispose();
+ }
   @override
   Widget build(BuildContext context) {
    return Scaffold(
@@ -30,7 +44,8 @@ class _InputScreen extends State<InputScreen>
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 25),
-            child: IconButton(onPressed: (){},
+            child: IconButton(onPressed: (){
+            },
                 icon: const Icon(Icons.refresh_sharp, color: Colors.black,size: 30)
             ),
           )
@@ -59,42 +74,13 @@ class _InputScreen extends State<InputScreen>
                     setState(() {
                     });
                   },
-                   child: Container(
-                     height: MediaQuery.of(context).size.height* 0.28,
-                     width: MediaQuery.of(context).size.width * 0.4,
-                     decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(20.00),
-                       color: (selectedGender== Gender.male) ? activeColorForMale: inactiveColor,
-                         boxShadow: const [
-                           BoxShadow(
-                               color: Colors.black,
-                               spreadRadius: 1,
-                           )
-                         ]
-                     ),
-                     child: Column(
-                       children: [
-                         Container(
-                           height: MediaQuery.of(context).size.height* 0.22,
-                           width: MediaQuery.of(context).size.width * 0.29,
-                           decoration: const BoxDecoration(
-                               shape: BoxShape.circle,
-                               image: DecorationImage
-                                 (
-                                   image: AssetImage('images/male head.jpg')
-                               ),
-                           ),
-                         ),
-                         const Text ('Male',style: TextStyle(
-                           fontSize: 20,
-                           fontWeight: FontWeight.bold,
-                             letterSpacing: 1.5
-                         ),
-                         textAlign: TextAlign.center,
-                         )
-                       ],
-                     ),
-                   ),
+                  child: GenderContainer(height: MediaQuery.of(context).size.height* 0.28,
+                  width:MediaQuery.of(context).size.width * 0.4,
+                    heightOfImage:MediaQuery.of(context).size.height* 0.22 ,
+                    widthOfImage: MediaQuery.of(context).size.width * 0.29,
+                    color: (selectedGender==Gender.male) ? activeColorForMale:inactiveColor,
+                    text: 'Male',
+                  )
                  ),
                  GestureDetector(
                    onTap: (){
@@ -102,42 +88,13 @@ class _InputScreen extends State<InputScreen>
                      setState(() {
                      });
                    },
-                   child: Container(
-                     height: MediaQuery.of(context).size.height* 0.28,
-                     width: MediaQuery.of(context).size.width * 0.4,
-                     decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(20.00),
-                         color: (selectedGender==Gender.female) ? activeColorForFemale:inactiveColor,
-                         boxShadow: const [
-                           BoxShadow(
-                             color: Colors.black,
-                             spreadRadius: 1,
-                           )
-                         ]
-                     ),
-                     child: Column(
-                       children: [
-                         Container(
-                           height: MediaQuery.of(context).size.height* 0.22,
-                           width: MediaQuery.of(context).size.width * 0.29,
-                           decoration: const BoxDecoration(
-                             shape: BoxShape.circle,
-                             image: DecorationImage
-                               (
-                                 image: AssetImage('images/female head.jpg')
-                             ),
-                           ),
-                         ),
-                         const Text ('Female',style: TextStyle(
-                           fontSize: 20,
-                           fontWeight: FontWeight.bold,
-                             letterSpacing: 1.5
-                         ),
-                           textAlign: TextAlign.center,
-                         )
-                       ],
-                     ),
-                   ),
+                     child: GenderContainer(height: MediaQuery.of(context).size.height* 0.28,
+                       width:MediaQuery.of(context).size.width * 0.4,
+                       heightOfImage:MediaQuery.of(context).size.height* 0.22 ,
+                       widthOfImage: MediaQuery.of(context).size.width * 0.29,
+                       color: (selectedGender==Gender.female) ? activeColorForFemale:inactiveColor,
+                       text: 'Female',
+                     )
                  ),
                ],
              ),
@@ -158,6 +115,8 @@ class _InputScreen extends State<InputScreen>
                          width: 160,
                          height: 100,
                          child: TextFormField(
+                           keyboardType: TextInputType.number,
+                           controller: ageTEcontroller,
                            decoration:const InputDecoration(
                              labelText: 'Age',
                            ),
@@ -169,6 +128,8 @@ class _InputScreen extends State<InputScreen>
                        width: 160,
                        height: 100,
                        child: TextFormField(
+                         keyboardType: TextInputType.number,
+                         controller: weightTEcontroller,
                          decoration: const InputDecoration(
                              labelText: 'Weight(kg)',
                          ),
@@ -184,6 +145,8 @@ class _InputScreen extends State<InputScreen>
                      width: 160,
                      height: 100,
                      child: TextFormField(
+                       keyboardType: TextInputType.number,
+                       controller: heightFtTEcontroller,
                        decoration:const InputDecoration(
                            labelText: 'Height (ft)',
                        ),
@@ -195,6 +158,8 @@ class _InputScreen extends State<InputScreen>
                    width: 160,
                    height: 100,
                    child: TextFormField(
+                     keyboardType: TextInputType.number,
+                     controller: heightInTEcontroller,
                      decoration: const InputDecoration(
                          labelText: 'Height (in)',
                      ),
@@ -203,7 +168,16 @@ class _InputScreen extends State<InputScreen>
                ],
              ),
              const SizedBox(height: 30,),
-             ElevatedButton(onPressed: (){},
+             ElevatedButton(onPressed: (){
+               double ? ft = double.tryParse(heightFtTEcontroller.text) ?? 0;
+               double ? inch = double.tryParse(heightInTEcontroller.text) ?? 0;
+               double ? weight = double.tryParse(weightTEcontroller.text) ?? 0;
+               double ? meter = (ft * 12 + inch) * 0.0254;
+                ans = weight/ (meter * meter);
+                setState(() {
+                });
+               Navigator.push(context, MaterialPageRoute(builder: (context)=>bmi_result(ans : ans),),);
+             },
                  child: const Text('Calculate your BMI->',
                  textAlign: TextAlign.center,
                  style:TextStyle(
@@ -211,7 +185,6 @@ class _InputScreen extends State<InputScreen>
                    fontWeight: FontWeight.w600,
                    letterSpacing: 1.5
                  ) ,
-
                  )
              )
            ],
